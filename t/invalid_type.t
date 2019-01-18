@@ -10,13 +10,14 @@ use Tie::CheckVariables;
 my $error;
 Tie::CheckVariables->on_error( sub { $error = 'This was a test' } );
 
-tie my $age, 'Tie::CheckVariables', 'age';
+tie my $age, 'Tie::CheckVariables', Int;
 
 $age = 99;
 is $error, undef;
 
 $age = 'a';
-is $error, undef;
+is $error, 'This was a test';
+$error = undef;
 
 $age = '01238';
 is $error, undef;
